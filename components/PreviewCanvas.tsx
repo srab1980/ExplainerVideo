@@ -90,36 +90,25 @@ export default function PreviewCanvas() {
             </Button>
 
             {/* Canvas content */}
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-              <div className="text-center space-y-4">
-                {/* Placeholder for illustrations - will be replaced with IllustrationCanvas */}
-                {activeScene.illustrations.length > 0 && (
-                  <div className="flex items-center justify-center gap-4 mb-6">
-                    {activeScene.illustrations.map((illustration, idx) => (
-                      <div
-                        key={illustration.id}
-                        className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center"
-                        style={{ backgroundColor: illustration.color + '20' }}
-                      >
-                        <span className="text-xs text-muted-foreground">
-                          {illustration.keyword}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+            <div className="absolute inset-0">
+              {/* Illustrations */}
+              {activeScene.illustrations.length > 0 && (
+                <IllustrationCanvas scene={activeScene} animate={true} />
+              )}
 
-                {/* Scene text */}
-                <div
-                  className={`
-                    px-6 py-4 rounded-lg
-                    ${activeScene.layout.textPosition.startsWith('overlay')
-                      ? 'bg-black/60 text-white'
-                      : 'bg-background/80 text-foreground'}
-                  `}
-                >
-                  <p className="text-base leading-relaxed">{activeScene.text}</p>
-                </div>
+              {/* Scene text overlay */}
+              <div
+                className={`
+                  absolute inset-x-0
+                  ${activeScene.layout.textPosition === 'overlay-bottom' ? 'bottom-0' : ''}
+                  ${activeScene.layout.textPosition === 'overlay-top' ? 'top-0' : ''}
+                  ${activeScene.layout.textPosition === 'bottom' ? 'bottom-0' : ''}
+                  ${activeScene.layout.textPosition === 'top' ? 'top-0' : ''}
+                  ${activeScene.layout.textPosition.startsWith('overlay') ? 'bg-black/60 text-white' : 'bg-transparent'}
+                  px-8 py-4
+                `}
+              >
+                <p className="text-base leading-relaxed text-center">{activeScene.text}</p>
               </div>
             </div>
           </div>
