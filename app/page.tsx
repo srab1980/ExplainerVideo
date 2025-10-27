@@ -5,11 +5,12 @@ import { Separator } from '@/components/ui/separator'
 import ScriptInput from '@/components/ScriptInput'
 import PreviewCanvas from '@/components/PreviewCanvas'
 import SceneTimeline from '@/components/SceneTimeline'
+import SceneEditor from '@/components/SceneEditor'
 import AutoSaveIndicator from '@/components/AutoSaveIndicator'
 import useProjectStore from '@/store/useProjectStore'
 
 export default function Home() {
-  const { currentProject, createProject } = useProjectStore()
+  const { currentProject, activeSceneId, isEditorOpen, createProject, closeEditor } = useProjectStore()
 
   useEffect(() => {
     // Initialize project on first load
