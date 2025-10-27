@@ -29,6 +29,7 @@ export default function Home() {
               AI-powered storyboard creator for explainer videos
             </p>
           </div>
+          <AutoSaveIndicator />
         </div>
       </header>
 
