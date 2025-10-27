@@ -53,6 +53,13 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Scene Editor Dialog */}
+      <SceneEditor
+        sceneId={activeSceneId}
+        isOpen={isEditorOpen}
+        onClose={closeEditor}
+      />
     </main>
   )
 }
