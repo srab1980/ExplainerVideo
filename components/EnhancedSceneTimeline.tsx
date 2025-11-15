@@ -233,16 +233,18 @@ export default function EnhancedSceneTimeline({
             <div className="stat-item">
               <span className="stat-label">Animations:</span>
               <div className="stat-value">
-                {scenes.reduce((counts, scene) => {
-                  counts[scene.animation] = (counts[scene.animation] || 0) + 1
-                  return counts
-                }, {} as Record<string, number>)}
+                {(() => {
+                  const counts = scenes.reduce((counts, scene) => {
+                    counts[scene.animation] = (counts[scene.animation] || 0) + 1
+                    return counts
+                  }, {} as Record<string, number>)
 
-                Object.entries(counts).map(([type, count]) => (
-                  <span key={type} className="animation-stat">
-                    {getAnimationIcon(type)} {count}
-                  </span>
-                ))}
+                  return Object.entries(counts).map(([type, count]) => (
+                    <span key={type} className="animation-stat">
+                      {getAnimationIcon(type)} {count}
+                    </span>
+                  ))
+                })()}
               </div>
             </div>
           </div>
