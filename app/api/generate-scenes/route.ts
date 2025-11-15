@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import type { GenerateScenesRequest, GenerateScenesResponse } from '@/types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+const getOpenAIClient = (apiKey: string) => {
+  return new OpenAI({
+    apiKey: apiKey,
+  })
+}
 
 const SYSTEM_PROMPT = `You are a storyboard assistant for explainer videos. Analyze the provided script and break it into visual scenes suitable for a video storyboard.
 
