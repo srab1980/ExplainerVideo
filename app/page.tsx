@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Settings, Download, Sparkles, Eye, EyeOff, Plus, Github } from 'lucide-react'
 import PreviewPanel from '@/components/PreviewPanel'
 import EnhancedSceneTimeline from '@/components/EnhancedSceneTimeline'
-import GitHubSync from '@/components/GitHubSync'
 
 interface Scene {
   id: string
