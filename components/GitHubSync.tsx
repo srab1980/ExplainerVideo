@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { GitHub, GithubIcon, Check, AlertCircle, Settings } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Github, Check, AlertCircle, Settings } from 'lucide-react'
 import { syncToGitHub, getGitHubConfig, setupGitHubConfig } from '@/lib/github-sync'
 
 export default function GitHubSync() {
