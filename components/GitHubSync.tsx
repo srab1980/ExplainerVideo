@@ -18,25 +18,19 @@ export default function GitHubSync() {
   }, [])
 
   const handleSync = async () => {
-    const projectData = JSON.parse(localStorage.getItem('storyvid-scenes') || '{}')
-
-    if (!token || !repo) {
-      setSyncStatus('error')
-      return
+    const projectData = {
+      id: `storyvid-${Date.now()}`,
+      title: 'StoryVid Project',
+      scenes: JSON.parse(localStorage.getItem('storyvid-scenes') || '[]'),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }
 
     setIsSyncing(true)
     setSyncStatus('idle')
 
     try {
-      const success = await syncToGitHub({
-        id: `storyvid-${Date.now()}`,
-        title: 'StoryVid Project',
-        scenes: projectData.scenes || [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      })
-
+      const success = await syncToGitHub(projectData)
       if (success) {
         setSyncStatus('success')
         setTimeout(() => setSyncStatus('idle'), 3000)
@@ -97,21 +91,20 @@ export default function GitHubSync() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-        title="GitHub Sync"
+        className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-sm hover:shadow-md transition-all"
+        title="Sync to GitHub"
       >
-        <GitHub className="w-4 h-4" />
-        <span className="text-sm font-medium">Sync to GitHub</span>
-        {token && <span className="ml-auto text-xs text-green-600">●</span>}
+        <GitHub className="w-4 h-4 text-gray-600" />
+        <span className="text-sm font-medium text-gray-700">Sync</span>
       </button>
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
                 <GithubIcon className="w-5 h-5" />
-                GitHub Sync Configuration
+                GitHub Sync
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
@@ -158,7 +151,7 @@ export default function GitHubSync() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block text-sm"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  Generate a Personal Access Token with "repo" scope at{' '}
+                  Generate a Personal Access Token with "repo" permissions at{' '}
                   <a
                     href="https://github.com/settings/tokens"
                     target="_blank"
@@ -176,7 +169,7 @@ export default function GitHubSync() {
               <h3 className="font-semibold text-blue-900 mb-2">How to Use GitHub Sync</h3>
               <ol className="list-decimal list-inside space-y-2 text-sm text-blue-800">
                 <li>Generate a Personal Access Token with "repo" permissions</li>
-                <li>Enter your repository name (username/repo)</li>
+                <li>Enter your repository name (format: username/repo)</li>
                 <li>Click "Save Configuration"</li>
                 <li>Use the "Sync to GitHub" button to backup your project</li>
                 <li>Your storyboards will be stored as JSON files in the repository</li>
@@ -184,7 +177,7 @@ export default function GitHubSync() {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-2 mt-6">
+            <div className="flex justify-between gap-2 mt-6">
               <button
                 onClick={() => setIsOpen(false)}
                 className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md border-gray-300 transition-colors"
@@ -192,12 +185,12 @@ export default function GitHubSync() {
                 Cancel
               </button>
               <button
-                onClick={handleSync}
+                onClick={handleSaveConfig}
                 disabled={!token || !repo || isSyncing}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
               >
                 <Settings className="w-4 h-4" />
-                {isSyncing ? 'Syncing...' : 'Sync to GitHub'}
+                {isSyncing ? 'Saving...' : 'Save Configuration'}
               </button>
             </div>
           </div>
