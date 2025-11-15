@@ -56,12 +56,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    // Get API key from header
+    const apiKey = request.headers.get('X-API-Key')
+    if (!apiKey || !apiKey.startsWith('sk-')) {
       return NextResponse.json(
-        { error: 'OpenAI API key not configured' },
-        { status: 500 }
+        { error: 'Valid OpenAI API key required' },
+        { status: 401 }
       )
     }
+
+    const openai = getOpenAIClient(apiKey)
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
