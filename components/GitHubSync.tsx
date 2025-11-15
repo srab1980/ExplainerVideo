@@ -103,7 +103,7 @@ export default function GitHubSync() {
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                <GithubIcon className="w-5 h-5" />
+                <Github className="w-5 h-5" />
                 GitHub Sync
               </h2>
               <button
