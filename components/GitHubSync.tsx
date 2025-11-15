@@ -94,7 +94,7 @@ export default function GitHubSync() {
         className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-sm hover:shadow-md transition-all"
         title="Sync to GitHub"
       >
-        <GitHub className="w-4 h-4 text-gray-600" />
+        <Github className="w-4 h-4 text-gray-600" />
         <span className="text-sm font-medium text-gray-700">Sync</span>
       </button>
 
